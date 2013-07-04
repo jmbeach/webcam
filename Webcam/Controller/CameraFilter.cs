@@ -24,56 +24,61 @@ namespace Webcam.Controller
 
         public bool SetBlackWhite()
         {
-            return this.BlackWhite != this.BlackWhite;
+            return BlackWhite = !BlackWhite;
         }
 
         public bool SetSepia()
         {
-            return this.Sepia != this.Sepia;
+            return Sepia = !Sepia;
         }
 
         public bool SetInvert()
         {
-            return this.Invert != this.Invert;
+            return Invert = !Invert;
         }
 
         public bool SetMirror()
         {
-            return this.Mirror != this.Mirror;
+            return Mirror = !Mirror;
         }
 
         #endregion
 
-
+        #region Operations
 
         public Bitmap SetFilterFor(Bitmap frame)
         {
-            if (frame != null)
+            Bitmap newFrame = frame;
+
+            if (newFrame != null)
             {
                 // Filter
-                if (this.Mirror) frame.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                if (!this.Mirror) frame.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                if (Mirror) newFrame.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                if (Mirror) newFrame.RotateFlip(RotateFlipType.RotateNoneFlipX);
 
-                if (this.Sepia)
+                if (Sepia)
                 {
                     Sepia sepiaFilter = new Sepia();
-                    frame = sepiaFilter.Apply(frame);
+                    newFrame = sepiaFilter.Apply(newFrame);
                 }
 
-                if (this.BlackWhite)
+                if (BlackWhite)
                 {
                     Grayscale grayscale = new Grayscale(0.4, 0.2, 0.4);
-                    frame = grayscale.Apply(frame);
+                    newFrame = grayscale.Apply(newFrame);
                 }
 
-                if (this.Invert)
+                if (Invert)
                 {
                     Invert invert = new Invert();
-                    frame = invert.Apply(frame);
+                    newFrame = invert.Apply(newFrame);
                 }
             }
 
-            return frame; 
+            return newFrame;
         }
+
+        #endregion
+
     }
 }
