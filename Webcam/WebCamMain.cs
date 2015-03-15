@@ -13,7 +13,7 @@ using Webcam.Controller;
 
 namespace Webcam
 {
-    public partial class WebcamMain : Form
+    public partial class WebcamMain : MetroFramework.Forms.MetroForm
     {
         public List<Photo> Photos = new List<Photo>();
         public FilterInfoCollection VideoCaptureDevices;
